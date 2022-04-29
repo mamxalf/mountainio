@@ -8,21 +8,15 @@ import (
 	"log"
 	"mountainio/app/exception"
 	"mountainio/domain/entity"
-	"strconv"
 )
 
 func ConnectPostgres(config Config) *gorm.DB {
 	// Parse from ENV
-	postgresHost, err := strconv.Atoi(config.Get("POSTGRES_HOST"))
-	exception.PanicIfNeeded(err)
-	postgresUser, err := strconv.Atoi(config.Get("POSTGRES_USER"))
-	exception.PanicIfNeeded(err)
-	postgresPassword, err := strconv.Atoi(config.Get("POSTGRES_PASSWORD"))
-	exception.PanicIfNeeded(err)
-	postgresName, err := strconv.Atoi(config.Get("POSTGRES_DB_NAME"))
-	exception.PanicIfNeeded(err)
-	postgresPort, err := strconv.Atoi(config.Get("POSTGRES_PORT"))
-	exception.PanicIfNeeded(err)
+	postgresHost := config.Get("POSTGRES_HOST")
+	postgresUser := config.Get("POSTGRES_USER")
+	postgresPassword := config.Get("POSTGRES_PASSWORD")
+	postgresName := config.Get("POSTGRES_DB_NAME")
+	postgresPort := config.Get("POSTGRES_PORT")
 
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s",
 		postgresHost, postgresUser, postgresPassword, postgresName, postgresPort)
