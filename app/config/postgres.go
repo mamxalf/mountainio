@@ -19,7 +19,7 @@ func ConnectPostgres(config Config) *gorm.DB {
 	exception.PanicIfNeeded(err)
 	postgresPassword, err := strconv.Atoi(config.Get("POSTGRES_PASSWORD"))
 	exception.PanicIfNeeded(err)
-	postgresName, err := strconv.Atoi(config.Get("POSTGRES_NAME"))
+	postgresName, err := strconv.Atoi(config.Get("POSTGRES_DB_NAME"))
 	exception.PanicIfNeeded(err)
 	postgresPort, err := strconv.Atoi(config.Get("POSTGRES_PORT"))
 	exception.PanicIfNeeded(err)
