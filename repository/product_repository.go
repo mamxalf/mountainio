@@ -1,6 +1,6 @@
 package repository
 
-import "golang-clean-architecture/entity"
+import "mountainio/entity"
 
 type ProductRepository interface {
 	Insert(product entity.Product)

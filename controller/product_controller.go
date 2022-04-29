@@ -3,9 +3,9 @@ package controller
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
-	"golang-clean-architecture/exception"
-	"golang-clean-architecture/model"
-	"golang-clean-architecture/service"
+	"mountainio/exception"
+	"mountainio/model"
+	"mountainio/service"
 )
 
 type ProductController struct {

@@ -2,7 +2,7 @@ package exception
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"golang-clean-architecture/model"
+	"mountainio/model"
 )
 
 func ErrorHandler(ctx *fiber.Ctx, err error) error {

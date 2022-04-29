@@ -3,11 +3,11 @@ package main
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/recover"
-	"golang-clean-architecture/config"
-	"golang-clean-architecture/controller"
-	"golang-clean-architecture/exception"
-	"golang-clean-architecture/repository"
-	"golang-clean-architecture/service"
+	"mountainio/config"
+	"mountainio/controller"
+	"mountainio/exception"
+	"mountainio/repository"
+	"mountainio/service"
 )
 
 func main() {

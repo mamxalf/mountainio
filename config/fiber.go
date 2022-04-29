@@ -2,7 +2,7 @@ package config
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"golang-clean-architecture/exception"
+	"mountainio/exception"
 )
 
 func NewFiberConfig() fiber.Config {

@@ -5,9 +5,9 @@ import (
 	"encoding/json"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
-	"golang-clean-architecture/entity"
-	"golang-clean-architecture/model"
 	"io/ioutil"
+	"mountainio/entity"
+	"mountainio/model"
 	"net/http/httptest"
 	"testing"
 )

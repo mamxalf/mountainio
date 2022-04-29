@@ -1,10 +1,10 @@
 package service
 
 import (
-	"golang-clean-architecture/entity"
-	"golang-clean-architecture/model"
-	"golang-clean-architecture/repository"
-	"golang-clean-architecture/validation"
+	"mountainio/entity"
+	"mountainio/model"
+	"mountainio/repository"
+	"mountainio/validation"
 )
 
 func NewProductService(productRepository *repository.ProductRepository) ProductService {
