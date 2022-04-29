@@ -9,4 +9,5 @@ require (
 	github.com/joho/godotenv v1.3.0
 	github.com/stretchr/testify v1.6.1
 	go.mongodb.org/mongo-driver v1.4.2
+	golang.org/x/sys v0.0.0-20220429121018-84afa8d3f7b3 // indirect
 )
