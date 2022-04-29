@@ -15,9 +15,10 @@ func NewUserController(userService *service.UserService) UserController {
 	return UserController{*userService}
 }
 
-func (controller *UserController) Route(app *fiber.App) {
+func (controller *UserController) Route(app fiber.Router) {
 	v1 := app.Group("/v1/users")
-	v1.Get("/")
+	v1.Post("/", controller.Register)
+	v1.Get("/", controller.Index)
 }
 
 func (controller *UserController) Register(c *fiber.Ctx) error {
@@ -30,5 +31,13 @@ func (controller *UserController) Register(c *fiber.Ctx) error {
 		Code:   200,
 		Status: "OK",
 		Data:   response,
+	})
+}
+
+func (controller *UserController) Index(c *fiber.Ctx) error {
+	return c.JSON(model.WebResponse{
+		Code:   200,
+		Status: "OK",
+		Data:   "Users Index PATH!",
 	})
 }

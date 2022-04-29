@@ -31,9 +31,10 @@ func main() {
 	app := fiber.New(config.NewFiberConfig())
 	app.Use(recover.New())
 
-	// Setup Routing
+	// Setup Routing API
+	api := app.Group("/api")
 	//productController.Route(app)
-	userController.Route(app)
+	userController.Route(api)
 
 	// Start App
 	err := app.Listen(":3000")
