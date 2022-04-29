@@ -6,5 +6,5 @@ import (
 )
 
 type UserService interface {
-	RegisterUser(params model.RegisterUser, password string) (entity.User, error)
+	RegisterUser(params model.RegisterUser) (entity.User, error)
 }

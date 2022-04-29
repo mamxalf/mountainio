@@ -4,7 +4,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
 	"mountainio/app/exception"
-	model2 "mountainio/domain/model"
+	"mountainio/domain/model"
 	"mountainio/service"
 )
 
@@ -22,14 +22,14 @@ func (controller *ProductController) Route(app *fiber.App) {
 }
 
 func (controller *ProductController) Create(c *fiber.Ctx) error {
-	var request model2.CreateProductRequest
+	var request model.CreateProductRequest
 	err := c.BodyParser(&request)
 	request.Id = uuid.New().String()
 
 	exception.PanicIfNeeded(err)
 
 	response := controller.ProductService.Create(request)
-	return c.JSON(model2.WebResponse{
+	return c.JSON(model.WebResponse{
 		Code:   200,
 		Status: "OK",
 		Data:   response,
@@ -38,7 +38,7 @@ func (controller *ProductController) Create(c *fiber.Ctx) error {
 
 func (controller *ProductController) List(c *fiber.Ctx) error {
 	responses := controller.ProductService.List()
-	return c.JSON(model2.WebResponse{
+	return c.JSON(model.WebResponse{
 		Code:   200,
 		Status: "OK",
 		Data:   responses,
