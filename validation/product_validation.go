@@ -2,8 +2,8 @@ package validation
 
 import (
 	validation "github.com/go-ozzo/ozzo-validation/v4"
-	"mountainio/exception"
-	"mountainio/model"
+	"mountainio/app/exception"
+	"mountainio/domain/model"
 )
 
 func Validate(request model.CreateProductRequest) {

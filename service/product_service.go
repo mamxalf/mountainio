@@ -1,6 +1,8 @@
 package service
 
-import "mountainio/model"
+import (
+	"mountainio/domain/model"
+)
 
 type ProductService interface {
 	Create(request model.CreateProductRequest) (response model.CreateProductResponse)

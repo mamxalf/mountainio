@@ -1,8 +1,8 @@
 package service
 
 import (
-	"mountainio/entity"
-	"mountainio/model"
+	"mountainio/domain/entity"
+	"mountainio/domain/model"
 	"mountainio/repository"
 	"mountainio/validation"
 )

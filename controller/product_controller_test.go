@@ -6,15 +6,15 @@ import (
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
 	"io/ioutil"
-	"mountainio/entity"
-	"mountainio/model"
+	"mountainio/domain/entity"
+	model2 "mountainio/domain/model"
 	"net/http/httptest"
 	"testing"
 )
 
 func TestProductController_Create(t *testing.T) {
 	productRepository.DeleteAll()
-	createProductRequest := model.CreateProductRequest{
+	createProductRequest := model2.CreateProductRequest{
 		Name:     "Test Product",
 		Price:    1000,
 		Quantity: 1000,
@@ -30,13 +30,13 @@ func TestProductController_Create(t *testing.T) {
 	assert.Equal(t, 200, response.StatusCode)
 	responseBody, _ := ioutil.ReadAll(response.Body)
 
-	webResponse := model.WebResponse{}
+	webResponse := model2.WebResponse{}
 	json.Unmarshal(responseBody, &webResponse)
 	assert.Equal(t, 200, webResponse.Code)
 	assert.Equal(t, "OK", webResponse.Status)
 
 	jsonData, _ := json.Marshal(webResponse.Data)
-	createProductResponse := model.CreateProductResponse{}
+	createProductResponse := model2.CreateProductResponse{}
 	json.Unmarshal(jsonData, &createProductResponse)
 	assert.NotNil(t, createProductResponse.Id)
 	assert.Equal(t, createProductRequest.Name, createProductResponse.Name)
@@ -62,7 +62,7 @@ func TestProductController_List(t *testing.T) {
 	assert.Equal(t, 200, response.StatusCode)
 	responseBody, _ := ioutil.ReadAll(response.Body)
 
-	webResponse := model.WebResponse{}
+	webResponse := model2.WebResponse{}
 	json.Unmarshal(responseBody, &webResponse)
 	assert.Equal(t, 200, webResponse.Code)
 	assert.Equal(t, "OK", webResponse.Status)
@@ -72,7 +72,7 @@ func TestProductController_List(t *testing.T) {
 
 	for _, data := range list {
 		jsonData, _ := json.Marshal(data)
-		getProductResponse := model.GetProductResponse{}
+		getProductResponse := model2.GetProductResponse{}
 		json.Unmarshal(jsonData, &getProductResponse)
 		if getProductResponse.Id == product.Id {
 			containsProduct = true

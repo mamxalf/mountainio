@@ -1,6 +1,8 @@
 package repository
 
-import "mountainio/entity"
+import (
+	"mountainio/domain/entity"
+)
 
 type ProductRepository interface {
 	Insert(product entity.Product)

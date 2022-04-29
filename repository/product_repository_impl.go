@@ -3,9 +3,9 @@ package repository
 import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
-	"mountainio/config"
-	"mountainio/entity"
-	"mountainio/exception"
+	"mountainio/app/config"
+	"mountainio/app/exception"
+	"mountainio/domain/entity"
 )
 
 func NewProductRepository(database *mongo.Database) ProductRepository {

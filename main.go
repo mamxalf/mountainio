@@ -3,17 +3,17 @@ package main
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/recover"
-	"mountainio/config"
+	config2 "mountainio/app/config"
+	"mountainio/app/exception"
 	"mountainio/controller"
-	"mountainio/exception"
 	"mountainio/repository"
 	"mountainio/service"
 )
 
 func main() {
 	// Setup Configuration
-	configuration := config.New()
-	database := config.NewMongoDatabase(configuration)
+	configuration := config2.New()
+	database := config2.NewMongoDatabase(configuration)
 
 	// Setup Repository
 	productRepository := repository.NewProductRepository(database)
@@ -25,7 +25,7 @@ func main() {
 	productController := controller.NewProductController(&productService)
 
 	// Setup Fiber
-	app := fiber.New(config.NewFiberConfig())
+	app := fiber.New(config2.NewFiberConfig())
 	app.Use(recover.New())
 
 	// Setup Routing
