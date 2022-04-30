@@ -1,4 +1,4 @@
-GET http://localhost:3000/api/v1/users/cb38510a-ea9d-466f-84fd-89c835fa624e
+GET http://localhost:3000/api/v1/users/91b48493-c25e-4241-b4c4-c4d3796a6c4a
 Accept: application/json
 
 ###

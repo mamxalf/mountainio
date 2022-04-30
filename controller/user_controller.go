@@ -37,12 +37,11 @@ func (controller *UserController) Register(c *fiber.Ctx) error {
 
 func (controller *UserController) FindByID(c *fiber.Ctx) error {
 	id := c.Params("id")
-	//fmt.Fprintf(c, "%s\n", id)
-	//response, _ := controller.UserService.FindUserByID(id)
+	response, _ := controller.UserService.FindUserByID(id)
 	return c.JSON(model.WebResponse{
 		Code:   200,
 		Status: "OK",
-		Data:   id,
+		Data:   response,
 	})
 }
 

@@ -27,10 +27,11 @@ func (repository *userRepositoryImpl) Insert(user entity.User) (entity.User, err
 func (repository *userRepositoryImpl) FindByID(id uuid.UUID) (entity.User, error) {
 	var user entity.User
 
-	ctx, cancel := config.DBContext(10)
-	defer cancel()
-
-	tx := repository.db.WithContext(ctx)
-	err := tx.Where("id = ?", id).Find(&user).Error
+	//ctx, cancel := config.DBContext(10)
+	//defer cancel()
+	//
+	//tx := repository.db.WithContext(ctx)
+	//err := tx.Where("id = ?", id).Find(&user).Error
+	err := repository.db.Where("id = ?", id).Find(&user).Error
 	return user, err
 }
