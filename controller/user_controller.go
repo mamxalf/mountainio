@@ -1,11 +1,15 @@
 package controller
 
 import (
+	"fmt"
 	"github.com/gofiber/fiber/v2"
+	"github.com/golang-jwt/jwt"
 	"mountainio/app/exception"
 	"mountainio/app/middleware"
 	"mountainio/domain/model"
 	"mountainio/service"
+	"os"
+	"strings"
 )
 
 type UserController struct {
@@ -48,10 +52,29 @@ func (controller *UserController) FindByID(c *fiber.Ctx) error {
 }
 
 func (controller *UserController) Me(c *fiber.Ctx) error {
+	authHeader := c.Request().Header.Peek("Authorization")
+	//if !strings.Contains(authHeader, "Bearer") {
+	//	response := helper.APIResponse("Unauthorized", http.StatusUnauthorized, "error", nil)
+	//	c.AbortWithStatusJSON(http.StatusUnauthorized, response)
+	//	return
+	//}
+
+	tokenString := ""
+	arrayToken := strings.Split(string(authHeader), " ")
+	if len(arrayToken) == 2 {
+		tokenString = arrayToken[1]
+	}
+	fmt.Println(tokenString)
+	token, _ := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		return []byte(os.Getenv("SECRET_JWT")), nil
+	})
+
+	claim, _ := token.Claims.(jwt.MapClaims)
+
 	return c.JSON(model.WebResponse{
 		Code:   200,
 		Status: "OK",
-		Data:   "Users ME PATH!",
+		Data:   claim,
 	})
 }
 
