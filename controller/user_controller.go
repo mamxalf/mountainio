@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt"
 	"mountainio/app/exception"
@@ -64,7 +63,7 @@ func (controller *UserController) Me(c *fiber.Ctx) error {
 	if len(arrayToken) == 2 {
 		tokenString = arrayToken[1]
 	}
-	fmt.Println(tokenString)
+
 	token, _ := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		return []byte(os.Getenv("SECRET_JWT")), nil
 	})
@@ -72,7 +71,7 @@ func (controller *UserController) Me(c *fiber.Ctx) error {
 	claim, _ := token.Claims.(jwt.MapClaims)
 
 	return c.JSON(model.WebResponse{
-		Code:   200,
+		Code:   fiber.StatusOK,
 		Status: "OK",
 		Data:   claim,
 	})
