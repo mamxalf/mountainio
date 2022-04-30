@@ -25,7 +25,9 @@ func (service *userServiceImpl) RegisterUser(params model.RegisterUser) (entity.
 		ID:    uuid.New(),
 		Name:  params.Name,
 		Email: params.Email,
+		Role:  "user",
 	}
+	// TODO: create reset token password use nanoID
 
 	passwordHash, err := bcrypt.GenerateFromPassword([]byte(params.Password), bcrypt.MinCost)
 	if err != nil {
