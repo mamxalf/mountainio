@@ -16,10 +16,10 @@ func NewUserController(userService *service.UserService) UserController {
 }
 
 func (controller *UserController) Route(app fiber.Router) {
-	v1 := app.Group("/v1/users")
-	v1.Post("/", controller.Register)
-	v1.Get("/:id", controller.FindByID)
-	v1.Get("/", controller.Index)
+	router := app.Group("/v1/users")
+	router.Post("/", controller.Register)
+	router.Get("/:id", controller.FindByID)
+	router.Get("/", controller.Index)
 }
 
 func (controller *UserController) Register(c *fiber.Ctx) error {
