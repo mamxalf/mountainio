@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"github.com/google/uuid"
 	"gorm.io/gorm"
 	"mountainio/app/config"
 	"mountainio/domain/entity"
@@ -20,5 +21,16 @@ func (repository *userRepositoryImpl) Insert(user entity.User) (entity.User, err
 
 	tx := repository.db.WithContext(ctx)
 	err := tx.Create(&user).Error
+	return user, err
+}
+
+func (repository *userRepositoryImpl) FindByID(id uuid.UUID) (entity.User, error) {
+	var user entity.User
+
+	ctx, cancel := config.DBContext(10)
+	defer cancel()
+
+	tx := repository.db.WithContext(ctx)
+	err := tx.Where("id = ?", id).Find(&user).Error
 	return user, err
 }

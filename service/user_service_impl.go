@@ -1,8 +1,10 @@
 package service
 
 import (
+	"errors"
 	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
+	"mountainio/app/helper"
 	"mountainio/domain/entity"
 	"mountainio/domain/model"
 	"mountainio/repository"
@@ -35,4 +37,15 @@ func (service *userServiceImpl) RegisterUser(params model.RegisterUser) (entity.
 
 	result, err := service.UserRepository.Insert(user)
 	return result, err
+}
+
+func (service *userServiceImpl) FindUserByID(id string) (entity.User, error) {
+	userID := helper.ConvertUUID(id)
+	user, err := service.UserRepository.FindByID(userID)
+
+	if user.ID == helper.CheckNilDataFromUUID() {
+		return user, errors.New("Data Not Found!")
+	}
+
+	return user, err
 }

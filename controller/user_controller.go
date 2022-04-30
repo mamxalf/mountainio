@@ -18,6 +18,7 @@ func NewUserController(userService *service.UserService) UserController {
 func (controller *UserController) Route(app fiber.Router) {
 	v1 := app.Group("/v1/users")
 	v1.Post("/", controller.Register)
+	v1.Get("/:id", controller.FindByID)
 	v1.Get("/", controller.Index)
 }
 
@@ -31,6 +32,17 @@ func (controller *UserController) Register(c *fiber.Ctx) error {
 		Code:   200,
 		Status: "OK",
 		Data:   response,
+	})
+}
+
+func (controller *UserController) FindByID(c *fiber.Ctx) error {
+	id := c.Params("id")
+	//fmt.Fprintf(c, "%s\n", id)
+	//response, _ := controller.UserService.FindUserByID(id)
+	return c.JSON(model.WebResponse{
+		Code:   200,
+		Status: "OK",
+		Data:   id,
 	})
 }
 
