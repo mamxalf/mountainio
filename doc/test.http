@@ -1,3 +1,8 @@
+GET http://localhost:3000/api/v1/users/me
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVkIjoxNjUxNjAwODMzLCJyb2xlIjoiIiwidXNlcl9pZCI6IjkxYjQ4NDkzLWMyNWUtNDI0MS1iNGM0LWM0ZDM3OTZhNmM0YSJ9.Otm1JPAxnhNmdtJIzyANhGQsZDJSBL6yCCJr07rvdh4
+
+###
 POST http://localhost:3000/api/v1/auths/login
 Content-Type: application/json
 

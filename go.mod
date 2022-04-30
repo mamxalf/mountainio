@@ -4,7 +4,8 @@ go 1.15
 
 require (
 	github.com/go-ozzo/ozzo-validation/v4 v4.2.2
-	github.com/gofiber/fiber/v2 v2.0.6
+	github.com/gofiber/fiber/v2 v2.17.0
+	github.com/gofiber/jwt/v2 v2.2.7
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/google/uuid v1.1.2
 	github.com/joho/godotenv v1.3.0

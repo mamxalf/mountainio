@@ -3,6 +3,7 @@ package controller
 import (
 	"github.com/gofiber/fiber/v2"
 	"mountainio/app/exception"
+	"mountainio/app/middleware"
 	"mountainio/domain/model"
 	"mountainio/service"
 )
@@ -18,6 +19,7 @@ func NewUserController(userService *service.UserService) UserController {
 func (controller *UserController) Route(app fiber.Router) {
 	router := app.Group("/users")
 	router.Post("/", controller.Register)
+	router.Get("/me", middleware.AuthProtected(), controller.Me)
 	router.Get("/:id", controller.FindByID)
 	router.Get("/", controller.Index)
 }
@@ -42,6 +44,14 @@ func (controller *UserController) FindByID(c *fiber.Ctx) error {
 		Code:   200,
 		Status: "OK",
 		Data:   response,
+	})
+}
+
+func (controller *UserController) Me(c *fiber.Ctx) error {
+	return c.JSON(model.WebResponse{
+		Code:   200,
+		Status: "OK",
+		Data:   "Users ME PATH!",
 	})
 }
 
