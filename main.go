@@ -33,8 +33,11 @@ func main() {
 
 	// Setup Routing API
 	api := app.Group("/api")
+
+	// Setup V1
+	v1 := api.Group("/v1")
 	//productController.Route(app)
-	userController.Route(api)
+	userController.Route(v1)
 
 	// Start App
 	err := app.Listen(":3000")

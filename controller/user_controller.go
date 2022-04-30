@@ -16,7 +16,7 @@ func NewUserController(userService *service.UserService) UserController {
 }
 
 func (controller *UserController) Route(app fiber.Router) {
-	router := app.Group("/v1/users")
+	router := app.Group("/users")
 	router.Post("/", controller.Register)
 	router.Get("/:id", controller.FindByID)
 	router.Get("/", controller.Index)
