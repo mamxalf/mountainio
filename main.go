@@ -26,6 +26,7 @@ func main() {
 	// Setup Controller
 	//productController := controller.NewProductController(&productService)
 	userController := controller.NewUserController(&userService)
+	authController := controller.NewAuthController(&userService)
 
 	// Setup Fiber
 	app := fiber.New(config.NewFiberConfig())
@@ -38,6 +39,7 @@ func main() {
 	v1 := api.Group("/v1")
 	//productController.Route(app)
 	userController.Route(v1)
+	authController.Route(v1)
 
 	// Start App
 	err := app.Listen(":3000")
