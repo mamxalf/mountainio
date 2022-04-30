@@ -1,6 +1,6 @@
 GET http://localhost:3000/api/v1/users/me
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVkIjoxNjUxNjAwODMzLCJyb2xlIjoiIiwidXNlcl9pZCI6IjkxYjQ4NDkzLWMyNWUtNDI0MS1iNGM0LWM0ZDM3OTZhNmM0YSJ9.Otm1JPAxnhNmdtJIzyANhGQsZDJSBL6yCCJr07rvdh4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmVkIjoxNjUxNjIyMjI5LCJyb2xlIjoidXNlciIsInVzZXJfaWQiOiJhODZiZTAwOS0wNmQ5LTQ3MmUtOGJiNC0zMDM5NzA0MGE5N2MifQ.oDu2_7W0OMNI6jDOmVM4-P6I6HX_q7Io9tv8Nvty9nw
 
 ###
 POST http://localhost:3000/api/v1/auths/login

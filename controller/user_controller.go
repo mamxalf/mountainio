@@ -2,7 +2,7 @@ package controller
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"github.com/golang-jwt/jwt"
+	"github.com/golang-jwt/jwt/v4"
 	"mountainio/app/exception"
 	"mountainio/app/middleware"
 	"mountainio/domain/model"
@@ -22,7 +22,7 @@ func NewUserController(userService *service.UserService) UserController {
 func (controller *UserController) Route(app fiber.Router) {
 	router := app.Group("/users")
 	router.Post("/", controller.Register)
-	router.Get("/me", middleware.AuthProtected(), controller.Me)
+	router.Get("/me", middleware.AuthProtected(), controller.MeV2)
 	router.Get("/:id", controller.FindByID)
 	router.Get("/", controller.Index)
 }
@@ -74,6 +74,15 @@ func (controller *UserController) Me(c *fiber.Ctx) error {
 		Code:   fiber.StatusOK,
 		Status: "OK",
 		Data:   claim,
+	})
+}
+
+func (controller *UserController) MeV2(c *fiber.Ctx) error {
+	user := c.Locals("user").(*jwt.Token)
+	return c.JSON(model.WebResponse{
+		Code:   fiber.StatusOK,
+		Status: "OK",
+		Data:   user,
 	})
 }
 
