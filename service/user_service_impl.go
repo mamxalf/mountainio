@@ -49,3 +49,7 @@ func (service *userServiceImpl) FindUserByID(id string) (entity.User, error) {
 
 	return user, err
 }
+
+func (service *userServiceImpl) FindUserByEmail(email string) (entity.User, error) {
+	return service.UserRepository.FindByEmail(email)
+}
