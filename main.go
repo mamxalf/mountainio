@@ -4,6 +4,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/gofiber/fiber/v2/middleware/monitor"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"mountainio/app/config"
 	"mountainio/app/exception"
@@ -16,6 +17,9 @@ func main() {
 	app.Use(recover.New())
 	app.Use(cors.New(config.CorsConfig()))
 	app.Use(logger.New(config.LoggerConfig()))
+
+	// Fiber Monitor
+	app.Get("/monitor", monitor.New())
 
 	// Setup Routing API
 	api := app.Group("/api")
