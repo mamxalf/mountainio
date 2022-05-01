@@ -2,13 +2,10 @@ package controller
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"github.com/golang-jwt/jwt/v4"
 	"mountainio/app/exception"
 	"mountainio/app/middleware"
 	"mountainio/domain/model"
 	"mountainio/service"
-	"os"
-	"strings"
 )
 
 type UserController struct {
@@ -22,7 +19,7 @@ func NewUserController(userService *service.UserService) UserController {
 func (controller *UserController) Route(app fiber.Router) {
 	router := app.Group("/users")
 	router.Post("/", controller.Register)
-	router.Get("/me", middleware.AuthProtected(), controller.MeV2)
+	router.Get("/me", middleware.AuthProtected(), controller.Me)
 	router.Get("/:id", controller.FindByID)
 	router.Get("/", controller.Index)
 }
@@ -51,38 +48,11 @@ func (controller *UserController) FindByID(c *fiber.Ctx) error {
 }
 
 func (controller *UserController) Me(c *fiber.Ctx) error {
-	authHeader := c.Request().Header.Peek("Authorization")
-	//if !strings.Contains(authHeader, "Bearer") {
-	//	response := helper.APIResponse("Unauthorized", http.StatusUnauthorized, "error", nil)
-	//	c.AbortWithStatusJSON(http.StatusUnauthorized, response)
-	//	return
-	//}
-
-	tokenString := ""
-	arrayToken := strings.Split(string(authHeader), " ")
-	if len(arrayToken) == 2 {
-		tokenString = arrayToken[1]
-	}
-
-	token, _ := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-		return []byte(os.Getenv("SECRET_JWT")), nil
-	})
-
-	claim, _ := token.Claims.(jwt.MapClaims)
-
+	claimToken := middleware.GetClaimToken(c)
 	return c.JSON(model.WebResponse{
 		Code:   fiber.StatusOK,
 		Status: "OK",
-		Data:   claim,
-	})
-}
-
-func (controller *UserController) MeV2(c *fiber.Ctx) error {
-	user := c.Locals("user").(*jwt.Token)
-	return c.JSON(model.WebResponse{
-		Code:   fiber.StatusOK,
-		Status: "OK",
-		Data:   user,
+		Data:   claimToken,
 	})
 }
 

@@ -24,6 +24,11 @@ func GenerateToken(auth model.AuthClaim) (string, error) {
 	return signedToken, nil
 }
 
+func GetClaimToken(c *fiber.Ctx) jwt.MapClaims {
+	user := c.Locals("user").(*jwt.Token)
+	return user.Claims.(jwt.MapClaims)
+}
+
 func AuthProtected() func(*fiber.Ctx) error {
 	return jwtware.New(jwtware.Config{
 		SigningKey:   []byte(os.Getenv("SECRET_JWT")),
