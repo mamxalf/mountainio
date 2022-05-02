@@ -4,19 +4,19 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"golang.org/x/crypto/bcrypt"
 	"mountainio/app/exception"
-	"mountainio/app/middleware"
+	"mountainio/app/response"
 	"mountainio/domain/model"
-	"mountainio/src/user/service"
-	"net/http"
-	"time"
+	_authService "mountainio/src/auth/service"
+	_userService "mountainio/src/user/service"
 )
 
 type AuthController struct {
-	UserService service.UserService
+	UserService _userService.UserService
+	AuthService _authService.AuthService
 }
 
-func NewAuthController(userService *service.UserService) AuthController {
-	return AuthController{*userService}
+func NewAuthController(userService *_userService.UserService, authService *_authService.AuthService) AuthController {
+	return AuthController{*userService, *authService}
 }
 
 func (controller *AuthController) Route(app fiber.Router) {
@@ -29,40 +29,19 @@ func (controller *AuthController) Login(c *fiber.Ctx) error {
 	err := c.BodyParser(&request)
 	exception.PanicIfNeeded(err)
 
-	user, _ := controller.UserService.FindUserByEmail(request.Email)
+	user, err := controller.UserService.FindUserByEmail(request.Email)
+	if err != nil {
+		return c.JSON(response.ErrorUnprocessableEntity(err))
+	}
+
 	err = bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(request.Password))
 	if err != nil {
-		return c.JSON(model.WebResponse{
-			Code:   http.StatusBadRequest,
-			Status: "ERROR",
-			Data:   err,
-		})
+		return c.JSON(response.ErrorBadRequest(err))
 	}
 
-	auth := model.AuthClaim{
-		UserID:  user.ID,
-		Role:    user.Role,
-		Expired: time.Now().Add(time.Hour * 72).Unix(),
-	}
-
-	token, err := middleware.GenerateToken(auth)
+	res, err := controller.AuthService.GenerateTokenAuth(user)
 	if err != nil {
-		return c.JSON(model.WebResponse{
-			Code:   http.StatusBadRequest,
-			Status: "ERROR",
-			Data:   err,
-		})
+		return c.JSON(response.ErrorBadRequest(err))
 	}
-
-	response := model.LoginSuccess{
-		UserID: user.ID,
-		Email:  user.Email,
-		Token:  token,
-	}
-
-	return c.JSON(model.WebResponse{
-		Code:   http.StatusOK,
-		Status: "OK",
-		Data:   response,
-	})
+	return c.JSON(response.Success(res))
 }
