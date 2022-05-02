@@ -8,6 +8,7 @@ import (
 	"os"
 )
 
+// TODO: Ini harusnya tidak masuk middleware
 func GenerateToken(auth model.AuthClaim) (string, error) {
 	claims := jwt.MapClaims{}
 	claims["user_id"] = auth.UserID
@@ -24,6 +25,7 @@ func GenerateToken(auth model.AuthClaim) (string, error) {
 	return signedToken, nil
 }
 
+// TODO: Ini harusnya tidak masuk middleware
 func GetClaimToken(c *fiber.Ctx) jwt.MapClaims {
 	user := c.Locals("user").(*jwt.Token)
 	return user.Claims.(jwt.MapClaims)
