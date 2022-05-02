@@ -16,7 +16,7 @@ func NewUserRepository(db *gorm.DB) UserRepository {
 }
 
 func (repository *userRepositoryImpl) Insert(user entity.User) (entity.User, error) {
-	ctx, cancel := config.DBContext(10)
+	ctx, cancel := config.DBContextTimeout(10)
 	defer cancel()
 
 	tx := repository.db.WithContext(ctx)
@@ -27,7 +27,7 @@ func (repository *userRepositoryImpl) Insert(user entity.User) (entity.User, err
 func (repository *userRepositoryImpl) FindByID(id uuid.UUID) (entity.User, error) {
 	var user entity.User
 
-	//ctx, cancel := config.DBContext(10)
+	//ctx, cancel := config.DBContextTimeout(10)
 	//defer cancel()
 	//
 	//tx := repository.db.WithContext(ctx)
@@ -39,7 +39,7 @@ func (repository *userRepositoryImpl) FindByID(id uuid.UUID) (entity.User, error
 func (repository *userRepositoryImpl) FindByEmail(email string) (entity.User, error) {
 	var user entity.User
 
-	ctx, cancel := config.DBContext(10)
+	ctx, cancel := config.DBContextTimeout(10)
 	defer cancel()
 
 	tx := repository.db.WithContext(ctx)
