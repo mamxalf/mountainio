@@ -12,3 +12,11 @@ func ErrorUnprocessableEntity(err error) model.WebResponse {
 		Data:   err.Error(),
 	}
 }
+
+func ErrorBadRequest(err error) model.WebResponse {
+	return model.WebResponse{
+		Code:   fiber.StatusBadRequest,
+		Status: "ERROR",
+		Data:   err.Error(),
+	}
+}
