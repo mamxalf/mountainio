@@ -6,7 +6,7 @@ import (
 )
 
 type UserService interface {
-	RegisterUser(params model.RegisterUser) (entity.User, error)
+	RegisterUser(params model.RegisterUser) (model.RegisterUserResponse, error)
 	FindUserByID(id string) (entity.User, error)
 	FindUserByEmail(email string) (entity.User, error)
 }

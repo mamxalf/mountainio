@@ -3,11 +3,14 @@ package service
 import (
 	"errors"
 	"github.com/google/uuid"
+	gonanoid "github.com/matoous/go-nanoid/v2"
 	"golang.org/x/crypto/bcrypt"
+	"mountainio/app/exception"
 	"mountainio/app/helper"
 	"mountainio/domain/entity"
 	"mountainio/domain/model"
 	"mountainio/src/user/repository"
+	"mountainio/validation"
 )
 
 type userServiceImpl struct {
@@ -20,25 +23,36 @@ func NewUserService(userRepository *repository.UserRepository) UserService {
 	}
 }
 
-func (service *userServiceImpl) RegisterUser(params model.RegisterUser) (entity.User, error) {
+func (service *userServiceImpl) RegisterUser(params model.RegisterUser) (model.RegisterUserResponse, error) {
+	validation.ValidateRegisterUser(params)
+
 	user := entity.User{
 		ID:    uuid.New(),
 		Name:  params.Name,
 		Email: params.Email,
 		Role:  "user",
 	}
-	// TODO: create reset token password use nanoID
 
 	passwordHash, err := bcrypt.GenerateFromPassword([]byte(params.Password), bcrypt.MinCost)
-	if err != nil {
-		return user, err
-	}
+	exception.PanicIfNeeded(err)
 
-	// Insert password to hash
+	// Insert password to Struct
+	resetPasswordToken, err := gonanoid.New()
+	exception.PanicIfNeeded(err)
+
 	user.PasswordHash = string(passwordHash)
+	user.ResetPasswordToken = resetPasswordToken
 
 	result, err := service.UserRepository.Insert(user)
-	return result, err
+
+	response := model.RegisterUserResponse{
+		Name:      result.Name,
+		Email:     result.Email,
+		Role:      result.Role,
+		CreatedAt: result.CreatedAt,
+		UpdatedAt: result.UpdatedAt,
+	}
+	return response, err
 }
 
 func (service *userServiceImpl) FindUserByID(id string) (entity.User, error) {

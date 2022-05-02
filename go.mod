@@ -9,6 +9,7 @@ require (
 	github.com/golang-jwt/jwt/v4 v4.0.0
 	github.com/google/uuid v1.1.2
 	github.com/joho/godotenv v1.3.0
+	github.com/matoous/go-nanoid/v2 v2.0.0 // indirect
 	github.com/stretchr/testify v1.7.0
 	go.mongodb.org/mongo-driver v1.4.2
 	golang.org/x/crypto v0.0.0-20210921155107-089bfa567519
