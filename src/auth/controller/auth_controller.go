@@ -8,6 +8,7 @@ import (
 	"mountainio/domain/model"
 	_authService "mountainio/src/auth/service"
 	_userService "mountainio/src/user/service"
+	"mountainio/validation"
 )
 
 type AuthController struct {
@@ -28,6 +29,9 @@ func (controller *AuthController) Login(c *fiber.Ctx) error {
 	var request model.LoginInput
 	err := c.BodyParser(&request)
 	exception.PanicIfNeeded(err)
+
+	// Validate Login Input
+	validation.ValidateLoginAuth(request)
 
 	user, err := controller.UserService.FindUserByEmail(request.Email)
 	if err != nil {
