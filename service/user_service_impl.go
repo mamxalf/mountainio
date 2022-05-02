@@ -7,7 +7,7 @@ import (
 	"mountainio/app/helper"
 	"mountainio/domain/entity"
 	"mountainio/domain/model"
-	"mountainio/repository"
+	"mountainio/src/user/repository"
 )
 
 type userServiceImpl struct {

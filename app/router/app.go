@@ -4,8 +4,8 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"mountainio/app/config"
 	"mountainio/controller"
-	"mountainio/repository"
 	"mountainio/service"
+	"mountainio/src/user/repository"
 )
 
 func SetupRoutesV1(app fiber.Router) {
