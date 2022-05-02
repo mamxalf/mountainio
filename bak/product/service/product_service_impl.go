@@ -1,9 +1,9 @@
 package service
 
 import (
+	"mountainio/bak/product/repository"
 	"mountainio/domain/entity"
 	"mountainio/domain/model"
-	"mountainio/repository"
 	"mountainio/validation"
 )
 

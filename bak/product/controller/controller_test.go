@@ -3,21 +3,21 @@ package controller
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/recover"
-	config2 "mountainio/app/config"
-	"mountainio/repository"
-	"mountainio/service"
+	"mountainio/app/config"
+	"mountainio/bak/product/repository"
+	"mountainio/bak/product/service"
 )
 
 func createTestApp() *fiber.App {
-	var app = fiber.New(config2.NewFiberConfig())
+	var app = fiber.New(config.NewFiberConfig())
 	app.Use(recover.New())
 	productController.Route(app)
 	return app
 }
 
-var configuration = config2.New("../.env.test")
+var configuration = config.New("../.env.test")
 
-var database = config2.NewMongoDatabase(configuration)
+var database = config.NewMongoDatabase(configuration)
 var productRepository = repository.NewProductRepository(database)
 var productService = service.NewProductService(&productRepository)
 

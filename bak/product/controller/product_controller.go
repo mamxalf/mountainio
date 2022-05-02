@@ -4,8 +4,8 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
 	"mountainio/app/exception"
+	"mountainio/bak/product/service"
 	"mountainio/domain/model"
-	"mountainio/service"
 )
 
 type ProductController struct {
