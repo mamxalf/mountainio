@@ -48,17 +48,9 @@ func (controller *UserController) FindByID(c *fiber.Ctx) error {
 
 func (controller *UserController) Me(c *fiber.Ctx) error {
 	claimToken := middleware.GetClaimToken(c)
-	return c.JSON(model.WebResponse{
-		Code:   fiber.StatusOK,
-		Status: "OK",
-		Data:   claimToken,
-	})
+	return c.JSON(response.Success(claimToken))
 }
 
 func (controller *UserController) Index(c *fiber.Ctx) error {
-	return c.JSON(model.WebResponse{
-		Code:   200,
-		Status: "OK",
-		Data:   "Users Index PATH!",
-	})
+	return c.JSON(response.Success("Users Index PATH!"))
 }
