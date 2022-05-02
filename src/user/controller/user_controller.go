@@ -29,9 +29,18 @@ func (controller *UserController) Register(c *fiber.Ctx) error {
 	err := c.BodyParser(&request)
 	exception.PanicIfNeeded(err)
 
-	response, _ := controller.UserService.RegisterUser(request)
+	response, err := controller.UserService.RegisterUser(request)
+
+	if err != nil {
+		return c.JSON(model.WebResponse{
+			Code:   fiber.StatusUnprocessableEntity,
+			Status: "ERROR",
+			Data:   err.Error(),
+		})
+	}
+
 	return c.JSON(model.WebResponse{
-		Code:   200,
+		Code:   fiber.StatusOK,
 		Status: "OK",
 		Data:   response,
 	})
