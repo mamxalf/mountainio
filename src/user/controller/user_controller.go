@@ -31,22 +31,19 @@ func (controller *UserController) Register(c *fiber.Ctx) error {
 	exception.PanicIfNeeded(err)
 
 	res, err := controller.UserService.RegisterUser(request)
-
 	if err != nil {
 		return c.JSON(response.ErrorUnprocessableEntity(err))
 	}
-
 	return c.JSON(response.Success(res))
 }
 
 func (controller *UserController) FindByID(c *fiber.Ctx) error {
 	id := c.Params("id")
-	response, _ := controller.UserService.FindUserByID(id)
-	return c.JSON(model.WebResponse{
-		Code:   200,
-		Status: "OK",
-		Data:   response,
-	})
+	res, err := controller.UserService.FindUserByID(id)
+	if err != nil {
+		return c.JSON(response.ErrorUnprocessableEntity(err))
+	}
+	return c.JSON(response.Success(res))
 }
 
 func (controller *UserController) Me(c *fiber.Ctx) error {

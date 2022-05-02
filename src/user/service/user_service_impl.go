@@ -23,7 +23,7 @@ func NewUserService(userRepository *repository.UserRepository) UserService {
 	}
 }
 
-func (service *userServiceImpl) RegisterUser(params model.RegisterUser) (model.RegisterUserResponse, error) {
+func (service *userServiceImpl) RegisterUser(params model.RegisterUser) (model.UserResponse, error) {
 	validation.ValidateRegisterUser(params)
 
 	user := entity.User{
@@ -45,7 +45,7 @@ func (service *userServiceImpl) RegisterUser(params model.RegisterUser) (model.R
 
 	result, err := service.UserRepository.Insert(user)
 
-	response := model.RegisterUserResponse{
+	response := model.UserResponse{
 		Name:      result.Name,
 		Email:     result.Email,
 		Role:      result.Role,
@@ -55,15 +55,23 @@ func (service *userServiceImpl) RegisterUser(params model.RegisterUser) (model.R
 	return response, err
 }
 
-func (service *userServiceImpl) FindUserByID(id string) (entity.User, error) {
+func (service *userServiceImpl) FindUserByID(id string) (model.UserResponse, error) {
 	userID := helper.ConvertUUID(id)
 	user, err := service.UserRepository.FindByID(userID)
 
 	if user.ID == helper.CheckNilDataFromUUID() {
-		return user, errors.New("Data Not Found!")
+		return model.UserResponse{}, errors.New("Data Not Found!")
 	}
 
-	return user, err
+	response := model.UserResponse{
+		Name:      user.Name,
+		Email:     user.Email,
+		Role:      user.Role,
+		CreatedAt: user.CreatedAt,
+		UpdatedAt: user.UpdatedAt,
+	}
+
+	return response, err
 }
 
 func (service *userServiceImpl) FindUserByEmail(email string) (entity.User, error) {
