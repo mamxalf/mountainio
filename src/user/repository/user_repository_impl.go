@@ -4,6 +4,7 @@ import (
 	"github.com/google/uuid"
 	"gorm.io/gorm"
 	"mountainio/app/config"
+	"mountainio/app/constant"
 	"mountainio/domain/entity"
 )
 
@@ -16,7 +17,7 @@ func NewUserRepository(db *gorm.DB) UserRepository {
 }
 
 func (repository *userRepositoryImpl) Insert(user entity.User) (entity.User, error) {
-	ctx, cancel := config.DBContextTimeout(10)
+	ctx, cancel := config.DBContextTimeout(constant.DBTimeout)
 	defer cancel()
 
 	tx := repository.db.WithContext(ctx)
@@ -27,7 +28,7 @@ func (repository *userRepositoryImpl) Insert(user entity.User) (entity.User, err
 func (repository *userRepositoryImpl) FindByID(id uuid.UUID) (entity.User, error) {
 	var user entity.User
 
-	//ctx, cancel := config.DBContextTimeout(10)
+	//ctx, cancel := config.DBContextTimeout(constant.DBTimeout)
 	//defer cancel()
 	//
 	//tx := repository.db.WithContext(ctx)
@@ -39,7 +40,7 @@ func (repository *userRepositoryImpl) FindByID(id uuid.UUID) (entity.User, error
 func (repository *userRepositoryImpl) FindByEmail(email string) (entity.User, error) {
 	var user entity.User
 
-	ctx, cancel := config.DBContextTimeout(10)
+	ctx, cancel := config.DBContextTimeout(constant.DBTimeout)
 	defer cancel()
 
 	tx := repository.db.WithContext(ctx)
