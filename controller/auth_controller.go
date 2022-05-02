@@ -6,7 +6,7 @@ import (
 	"mountainio/app/exception"
 	"mountainio/app/middleware"
 	"mountainio/domain/model"
-	"mountainio/service"
+	"mountainio/src/user/service"
 	"net/http"
 	"time"
 )

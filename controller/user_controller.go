@@ -5,7 +5,7 @@ import (
 	"mountainio/app/exception"
 	"mountainio/app/middleware"
 	"mountainio/domain/model"
-	"mountainio/service"
+	"mountainio/src/user/service"
 )
 
 type UserController struct {
