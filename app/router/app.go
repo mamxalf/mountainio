@@ -3,7 +3,7 @@ package router
 import (
 	"github.com/gofiber/fiber/v2"
 	"mountainio/app/config"
-	"mountainio/controller"
+	_authController "mountainio/src/auth/controller"
 	_userController "mountainio/src/user/controller"
 	"mountainio/src/user/repository"
 	"mountainio/src/user/service"
@@ -25,7 +25,7 @@ func SetupRoutesV1(app fiber.Router) {
 	// Setup Controller
 	//productController := controller.NewProductController(&productService)
 	userController := _userController.NewUserController(&userService)
-	authController := controller.NewAuthController(&userService)
+	authController := _authController.NewAuthController(&userService)
 
 	//productController.Route(app)
 	userController.Route(app)
