@@ -4,6 +4,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"mountainio/app/exception"
 	"mountainio/app/middleware"
+	"mountainio/app/response"
 	"mountainio/domain/model"
 	"mountainio/src/user/service"
 )
@@ -29,21 +30,13 @@ func (controller *UserController) Register(c *fiber.Ctx) error {
 	err := c.BodyParser(&request)
 	exception.PanicIfNeeded(err)
 
-	response, err := controller.UserService.RegisterUser(request)
+	res, err := controller.UserService.RegisterUser(request)
 
 	if err != nil {
-		return c.JSON(model.WebResponse{
-			Code:   fiber.StatusUnprocessableEntity,
-			Status: "ERROR",
-			Data:   err.Error(),
-		})
+		return c.JSON(response.ErrorUnprocessableEntity(err))
 	}
 
-	return c.JSON(model.WebResponse{
-		Code:   fiber.StatusOK,
-		Status: "OK",
-		Data:   response,
-	})
+	return c.JSON(response.Success(res))
 }
 
 func (controller *UserController) FindByID(c *fiber.Ctx) error {
